@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: news-app
+    runtime: python
+    rootDir: news
+    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --no-input"
+    startCommand: "gunicorn news.wsgi:application"
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: "news-app.onrender.com"
+      - key: CSRF_TRUSTED_ORIGINS
+        value: "https://news-app.onrender.com"
+      - key: NEWSAPI_KEY
+        sync: false   # Set this manually in Render dashboard
+    plan: free
