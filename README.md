@@ -85,6 +85,3 @@ This project is configured for seamless deployment on Render using the `render.y
 
 ---
 
-## 📝 License
-
-This project is open-source and available under the MIT License.
