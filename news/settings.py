@@ -33,7 +33,10 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-*t7kg=4shftr^j7+3-rufvbjqq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',') + ['.onrender.com']
+# Robustly parse ALLOWED_HOSTS and always allow Render domains
+ALLOWED_HOSTS = [h.strip().rstrip('/') for h in os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')]
+if '.onrender.com' not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append('.onrender.com')
 
 
 # Application definition
@@ -131,7 +134,8 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # CSRF trusted origins for Render deployment
-CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', 'https://*.onrender.com').split(',')
+# CSRF trusted origins: strip trailing slashes to prevent errors
+CSRF_TRUSTED_ORIGINS = [o.strip().rstrip('/') for o in os.getenv('CSRF_TRUSTED_ORIGINS', 'https://*.onrender.com').split(',')]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
