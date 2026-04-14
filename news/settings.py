@@ -17,7 +17,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-NEWS_API_KEY = os.getenv("NEWS_API_KEY")
+NEWS_API_KEY = os.getenv("NEWSAPI_KEY")
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -33,7 +33,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-*t7kg=4shftr^j7+3-rufvbjqq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',') + ['.onrender.com']
 
 
 # Application definition
